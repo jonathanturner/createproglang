@@ -156,11 +156,9 @@ Result eval(NodePtr exp, std::map<std::string, NodePtr> &symbols) {
             return eval_identifier(exp, symbols);
         }
         break;
-        default : {
-
-        }
+        default :
+            throw EvalError("Unknown type for: " + exp->text);
         break;
     }
-
-    return Result();
+    return Result();  //this is never called
 }
