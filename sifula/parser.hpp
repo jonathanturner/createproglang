@@ -10,7 +10,6 @@
 
 NodePtr parse(NodePtr head);
 NodePtr parse_recurse(NodePtr &curr, NodePtr lhs, int min_prec, std::map<std::string, int> &prec_table);
-void clean_function_sites(NodePtr root);
 void debug_print(NodePtr node, const std::string &prepend);
 
 struct ParserError {

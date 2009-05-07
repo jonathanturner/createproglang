@@ -39,46 +39,12 @@ NodePtr parse(NodePtr head) {
 }
 
 NodePtr parse_recurse(NodePtr &curr, NodePtr lhs, int min_prec, std::map<std::string, int> &prec_table) {
-
-    /*
-    while ((curr->next != NULL) && (prec_table[curr->text] >= min_prec)) {
-        int prev_prec = prec_table[curr->text];
-
-        if (curr->type != NodeType::OPERATOR) {
-            throw ParserError("Expected operator at: " + curr->text);
-        }
-        NodePtr op = curr;
-        curr = curr->next;
-        NodePtr rhs = curr;
-        if (rhs == NULL) {
-            throw ParserError("Incomplete expression at: " + curr->text);
-        }
-        curr = curr->next;
-        if ((curr != NULL) && (curr->type == NodeType::OPERATOR) &&
-                (prev_prec < prec_table[curr->text])) {
-
-            while ((curr != NULL) && (curr->type == NodeType::OPERATOR) &&
-                    (prev_prec < prec_table[curr->text])) {
-
-                rhs = parse_recurse(curr, rhs, prec_table[curr->text], prec_table);
-            }
-        }
-
-        lhs->parent = op;
-        rhs->parent = op;
-        op->children.push_back(lhs);
-        op->children.push_back(rhs);
-        lhs = op;
-    }
-    */
-
     NodePtr op;
     NodePtr rhs;
     int prec;
 
     while (curr->next != NULL) {
         op = curr;
-        //std::cout << "Op: " << op->text << std::endl;
         if (curr->next == NULL) {
             throw ParserError("Incomplete expression at: " + curr->text);
         }
@@ -90,7 +56,6 @@ NodePtr parse_recurse(NodePtr &curr, NodePtr lhs, int min_prec, std::map<std::st
 
         curr = curr->next;
         rhs = curr;
-        //std::cout << "Rhs: " << rhs->text << std::endl;
         if (curr->next != NULL) {
             NodePtr peek_op = curr->next;
             int peek_prec = prec_table[peek_op->text];
@@ -101,7 +66,6 @@ NodePtr parse_recurse(NodePtr &curr, NodePtr lhs, int min_prec, std::map<std::st
         }
         lhs->parent = op;
         rhs->parent = op;
-        //std::cout << "Push: " << lhs->text << " and " << rhs->text << " on " << op->text << std::endl;
         op->children.push_back(lhs);
         op->children.push_back(rhs);
         lhs = op;
@@ -110,6 +74,3 @@ NodePtr parse_recurse(NodePtr &curr, NodePtr lhs, int min_prec, std::map<std::st
     return lhs;
 }
 
-void clean_function_sites(NodePtr root) {
-
-}
