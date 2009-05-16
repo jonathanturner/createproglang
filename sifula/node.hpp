@@ -8,11 +8,12 @@
 #include <vector>
 #include <string>
 
-#define NodePtr std::tr1::shared_ptr<Node>
 
 class NodeType {
 public: enum Type { IDENTIFIER, NUMBER, OPERATOR, FUNCTION };
 };
+
+typedef std::tr1::shared_ptr<struct Node> NodePtr;
 
 struct Node {
     std::string text;
@@ -26,5 +27,6 @@ struct Node {
     NodePtr parent;
     std::vector<NodePtr> children;
 };
+
 
 #endif /* NODE_HPP_ */
